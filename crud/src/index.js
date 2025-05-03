@@ -3,12 +3,14 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
 import RootLayout from "./pages/RootLayout";
 import Add from "./pages/Add";
 import Edit from "./pages/Edit";
 import Index from "./pages/Index";
 import Details from "./pages/Details";
 import ErrorPage from "./pages/ErrorPage";
+import store from "./state";
 
 const routers = createBrowserRouter([
   {
@@ -30,7 +32,8 @@ const routers = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <RouterProvider router={routers}></RouterProvider>
-  </React.StrictMode>
+  </Provider>
+  
 );
