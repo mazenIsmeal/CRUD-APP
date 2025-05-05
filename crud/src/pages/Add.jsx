@@ -11,7 +11,7 @@ const Add = () => {
   const [description, setDescription] = useState("")
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const {loading, error} = useSelector((state) => state);
+  const {loading, error} = useSelector((state) => state.posts);
   const formHandler = (e) => {
     e.preventDefault();
     const id = Math.floor(Math.random() * 500)

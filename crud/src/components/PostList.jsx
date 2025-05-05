@@ -4,6 +4,7 @@ import {
   } from "react-bootstrap";
 import PostListItem from './PostListItem';
 
+
 export const PostList = ({data, deleteHandler}) => {
   return (
     <Table striped bordered hover>

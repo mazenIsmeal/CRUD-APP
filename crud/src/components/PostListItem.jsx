@@ -3,6 +3,7 @@ import {
     Button,
     ButtonGroup,
   } from "react-bootstrap";
+  import { Link } from 'react-router-dom';
 
 const PostListItem = ({data, deleteHandler}) => {
     const askDelete = (item) => {
@@ -14,7 +15,9 @@ const PostListItem = ({data, deleteHandler}) => {
     const posts = data.map((el, idx) => (
         <tr key={el.id}>
           <td>#{++idx}</td>
-          <td>{el.title}</td>
+          <td>
+            <Link to={`${el.id}/details`}>{el.title}</Link>
+          </td>
           <td>
             <ButtonGroup aria-label="Basic example">
               <Button variant="success">Edit</Button>

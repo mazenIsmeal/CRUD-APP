@@ -1,10 +1,31 @@
 import React from 'react'
 
 const Loading = ({loading, error, children}) => {
-  // const cloneButton = children.type.render.displayName
-  
-  return (
-    <>
+  const elementType = children?.type?.displayName || children?.type?.name;
+
+  const renderHandler = () => {
+    if(elementType === "Button") {
+      const cloneButton = React.cloneElement(
+        children,
+        { disabled: true },
+        "Loading..."
+      );
+      return (
+        <>
+        {
+        loading ? cloneButton: 
+        error ? 
+            <>
+              {children}
+              <p>{error}</p>
+            </>
+        : children
+        }
+    </>
+      )
+    }
+    return (
+      <>
         {
         loading ? 
             <p colSpan={3}>Loading Please Wait....</p> : 
@@ -12,6 +33,13 @@ const Loading = ({loading, error, children}) => {
             <p colSpan={3}>{error}</p>
         : children
         }
+    </>
+    )
+  }
+  
+  return (
+    <>
+      {renderHandler()}
     </>
   )
 }
