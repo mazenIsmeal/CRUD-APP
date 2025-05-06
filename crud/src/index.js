@@ -12,6 +12,12 @@ import Details from "./pages/Details";
 import ErrorPage from "./pages/ErrorPage";
 import store from "./state";
 
+const postPromosHandler = ({params}) => {
+  if(isNaN(params.id)) {
+    throw new Response('Bad Request', {statusText: 'Please make to insert correct post ID', status: 400})
+  }
+}
+
 const routers = createBrowserRouter([
   {
     path: '/',
@@ -19,13 +25,9 @@ const routers = createBrowserRouter([
     errorElement: <ErrorPage /> ,
     children: [
       {path: 'add', element: <Add />},
-      {path: ':id/edit', element: <Edit />},
+      {path: ':id/edit', element: <Edit />, loader:postPromosHandler},
       {index: true, element: <Index />},
-      {path: ':id/details', element: <Details />, loader: ({params}) => {
-        if(isNaN(params.id)) {
-          throw new Response('Bad Request', {statusText: 'Please make to insert correct post ID', status: 400})
-        }
-      }}
+      {path: ':id/details', element: <Details />, loader:postPromosHandler }
     ]
   }
 ])

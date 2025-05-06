@@ -44,6 +44,23 @@ export const insertPost = createAsyncThunk('posts/insertPost', async (item, thun
     }
 })
 
+export const editPost = createAsyncThunk('posts/editPost', async (item, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
+        const res = await fetch(`http://localhost:3500/posts/${item.id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(item),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            }
+        })
+        const data = res.json()
+        return data;
+    } catch (error) {
+        return rejectWithValue(error.message)
+    }
+})
+
 export const getItem = createAsyncThunk('posts/getItem', async (id, thunkAPI) => {
     const { rejectWithValue } = thunkAPI
     try {
@@ -58,7 +75,11 @@ export const getItem = createAsyncThunk('posts/getItem', async (id, thunkAPI) =>
 const postSlice = createSlice({
     name: 'posts',
     initialState,
-    reducers: {},
+    reducers: {
+        cleanRecord: (state) => {
+            state.post =null
+        }
+    },
     extraReducers: {
         // GET POSTS
         [getPosts.pending]: (state, action) => {
@@ -78,11 +99,11 @@ const postSlice = createSlice({
             state.loading = true
             state.error = null
         },
-        [insertPost.pending]: (state, action) => {
+        [insertPost.fulfilled]: (state, action) => {
             state.loading = false;
             state.posts.push(action.payload)
         },
-        [insertPost.pending]: (state, action) => {
+        [insertPost.rejected]: (state, action) => {
             state.loading = false;
             state.error = action.payload
         },
@@ -111,7 +132,20 @@ const postSlice = createSlice({
         [getItem.rejected]: (state, action) => {
             state.loading = false;
             state.error = action.payload
-        }
+        },
+        // Edit Post Item
+        [editPost.pending]: (state) => {
+            state.loading = true
+            state.error = null
+        },
+        [editPost.fulfilled]: (state, action) => {
+            state.loading = false;
+            state.post = action.payload
+        },
+        [editPost.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload
+        },
     },
 })
 
