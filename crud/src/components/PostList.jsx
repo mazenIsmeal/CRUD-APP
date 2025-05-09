@@ -5,7 +5,7 @@ import {
 import PostListItem from './PostListItem';
 
 
-export const PostList = ({data, deleteHandler}) => {
+export const PostList = ({data, deleteHandler, isLoggedIn}) => {
   return (
     <Table striped bordered hover>
       <thead>
@@ -16,7 +16,7 @@ export const PostList = ({data, deleteHandler}) => {
         </tr>
       </thead>
       <tbody>
-        <PostListItem data={data} deleteHandler={deleteHandler} />
+        <PostListItem data={data} deleteHandler={deleteHandler} isLoggedIn={isLoggedIn} />
       </tbody>
     </Table>
   )
